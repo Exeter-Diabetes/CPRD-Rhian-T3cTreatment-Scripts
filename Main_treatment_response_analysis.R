@@ -24,14 +24,14 @@ library(aurum)
 ################################################################################
 ###SETUP########################################################################
 
+################################################################################
 ###Connecting to data and setting up analysis###################################
 #Initialise connection
 cprd = CPRDData$new(cprdEnv = "test-remote",cprdConf = "C:/Users/rh530/.aurum.yaml")
 codesets = cprd$codesets()
 codes = codesets$getAllCodeSetVersion(v = "31/10/2021")
-
-#Connect to 'Rhian_T3c' analysis
 analysis = cprd$analysis("Rhian_T3c")
+################################################################################
 
 #Load cohort
 mm_all <- mm_all %>% analysis$cached("cohort_20231108_all_1stinstance", indexes=c("patid", "dstartdate", "drugclass"))
