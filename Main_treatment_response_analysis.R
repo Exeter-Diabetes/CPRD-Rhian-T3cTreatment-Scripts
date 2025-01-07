@@ -24,14 +24,14 @@ library(aurum)
 ################################################################################
 ###SETUP########################################################################
 
-################################################################################
 ###Connecting to data and setting up analysis###################################
 #Initialise connection
 cprd = CPRDData$new(cprdEnv = "test-remote",cprdConf = "C:/Users/rh530/.aurum.yaml")
 codesets = cprd$codesets()
 codes = codesets$getAllCodeSetVersion(v = "31/10/2021")
+
+#Connect to 'Rhian_T3c' analysis
 analysis = cprd$analysis("Rhian_T3c")
-################################################################################
 
 #Load cohort
 mm_all <- mm_all %>% analysis$cached("cohort_20231108_all_1stinstance", indexes=c("patid", "dstartdate", "drugclass"))
@@ -692,11 +692,11 @@ kableExtra::kable(HbA1c_results_tidied,format="html", align="lll") %>%
 
 #Reformat for supplementary tables
 HbA1c_results_new_table <- HbA1c_results_tidied %>% filter(subgroup == "Type 2") %>% 
-  select(drug, condition, 'N T2' = 'N with non-missing outcome', 'Average HbA1c response (95%CI) T2' = 'Average HbA1c response (95%CI)') %>%
+  select(drug, condition, 'N T2' = 'N with non-missing outcome', 'Average HbA1c response unadjusted T2' = 'Average HbA1c response unadjusted', 'Average HbA1c response (95%CI) T2' = 'Average HbA1c response (95%CI)') %>%
   left_join(HbA1c_results_tidied %>% filter(subgroup == "PEI") %>% 
-              select(drug, condition, 'N PEI' = 'N with non-missing outcome', 'Average HbA1c response (95%CI) PEI' = 'Average HbA1c response (95%CI)', 'Average difference (95%CI) PEI' = 'Average difference (95%CI)')) %>%
+              select(drug, condition, 'N PEI' = 'N with non-missing outcome', 'Average HbA1c response unadjusted PEI' = 'Average HbA1c response unadjusted', 'Average HbA1c response (95%CI) PEI' = 'Average HbA1c response (95%CI)', 'Average difference (95%CI) PEI' = 'Average difference (95%CI)')) %>%
   left_join(HbA1c_results_tidied %>% filter(subgroup == "No PEI") %>% 
-              select(drug, condition, 'N No PEI' = 'N with non-missing outcome', 'Average HbA1c response (95%CI) No PEI' = 'Average HbA1c response (95%CI)', 'Average difference (95%CI) No PEI' = 'Average difference (95%CI)'))
+              select(drug, condition, 'N No PEI' = 'N with non-missing outcome', 'Average HbA1c response unadjusted No PEI' = 'Average HbA1c response unadjusted', 'Average HbA1c response (95%CI) No PEI' = 'Average HbA1c response (95%CI)', 'Average difference (95%CI) No PEI' = 'Average difference (95%CI)'))
 
 #Output HTML table
 kableExtra::kable(HbA1c_results_new_table,format="html", align="lll") %>% 
@@ -704,13 +704,16 @@ kableExtra::kable(HbA1c_results_new_table,format="html", align="lll") %>%
   column_spec(1,width="3cm") %>%
   column_spec(2,width="6cm") %>%
   column_spec(3,width="4cm") %>%
-  column_spec(4,width="6cm") %>%
-  column_spec(5,width="4cm") %>%
-  column_spec(6,width="6cm") %>%
-  column_spec(7,width="6cm") %>%
-  column_spec(8,width="4cm") %>%
+  column_spec(4,width="4cm") %>%
+  column_spec(5,width="6cm") %>%
+  column_spec(6,width="4cm") %>%
+  column_spec(7,width="4cm") %>%
+  column_spec(8,width="6cm") %>%
   column_spec(9,width="6cm") %>%
-  column_spec(10,width="6cm") %>%
+  column_spec(10,width="4cm") %>%
+  column_spec(11,width="4cm") %>%
+  column_spec(12,width="6cm") %>%
+  column_spec(13,width="6cm") %>%
   cat(.,file="HbA1c_supplementary_table.html")
 
 
@@ -754,11 +757,11 @@ kableExtra::kable(discontinuation_results_tidied,format="html", align="lll") %>%
 
 #Reformat for supplementary tables
 discontinuation_results_new_table <- discontinuation_results_tidied %>% filter(subgroup == "Type 2") %>% 
-  select(drug, condition, 'N T2' = 'N with non-missing outcome', 'Average discontinuation (95%CI) T2, %' = 'Average discontinuation (95%CI), %') %>%
+  select(drug, condition, 'N T2' = 'N with non-missing outcome', 'Average discontinuation unadjusted T2' = 'Average discontinuation unadjusted, %', 'Average discontinuation (95%CI) T2, %' = 'Average discontinuation (95%CI), %') %>%
   left_join(discontinuation_results_tidied %>% filter(subgroup == "PEI") %>% 
-              select(drug, condition, 'N PEI' = 'N with non-missing outcome', 'Average discontinuation (95%CI) PEI, %' = 'Average discontinuation (95%CI), %', 'Odds ratio for discontinuation (95%CI) PEI' = 'Odds ratio for discontinuation (95%CI)')) %>%
+              select(drug, condition, 'N PEI' = 'N with non-missing outcome', 'Average discontinuation unadjusted PEI' = 'Average discontinuation unadjusted, %', 'Average discontinuation (95%CI) PEI, %' = 'Average discontinuation (95%CI), %', 'Odds ratio for discontinuation (95%CI) PEI' = 'Odds ratio for discontinuation (95%CI)')) %>%
   left_join(discontinuation_results_tidied %>% filter(subgroup == "No PEI") %>% 
-              select(drug, condition, 'N No PEI' = 'N with non-missing outcome', 'Average discontinuation (95%CI) No PEI, %' = 'Average discontinuation (95%CI), %', 'Odds ratio for discontinuation (95%CI) No PEI' = 'Odds ratio for discontinuation (95%CI)'))
+              select(drug, condition, 'N No PEI' = 'N with non-missing outcome', 'Average discontinuation unadjusted No PEI' = 'Average discontinuation unadjusted, %', 'Average discontinuation (95%CI) No PEI, %' = 'Average discontinuation (95%CI), %', 'Odds ratio for discontinuation (95%CI) No PEI' = 'Odds ratio for discontinuation (95%CI)'))
 
 #Output HTML table
 kableExtra::kable(discontinuation_results_new_table,format="html", align="lll") %>% 
@@ -766,13 +769,16 @@ kableExtra::kable(discontinuation_results_new_table,format="html", align="lll") 
   column_spec(1,width="3cm") %>%
   column_spec(2,width="6cm") %>%
   column_spec(3,width="4cm") %>%
-  column_spec(4,width="6cm") %>%
-  column_spec(5,width="4cm") %>%
-  column_spec(6,width="6cm") %>%
-  column_spec(7,width="6cm") %>%
-  column_spec(8,width="4cm") %>%
+  column_spec(4,width="4cm") %>%
+  column_spec(5,width="6cm") %>%
+  column_spec(6,width="4cm") %>%
+  column_spec(7,width="4cm") %>%
+  column_spec(8,width="6cm") %>%
   column_spec(9,width="6cm") %>%
-  column_spec(10,width="6cm") %>%
+  column_spec(10,width="4cm") %>%
+  column_spec(11,width="4cm") %>%
+  column_spec(12,width="6cm") %>%
+  column_spec(13,width="6cm") %>%
   cat(.,file="discontinuation_supplementary_table.html")
 
 
@@ -817,11 +823,11 @@ kableExtra::kable(weight_results_tidied,format="html", align="lll") %>%
 
 #Reformat for supplementary tables
 weight_results_new_table <- weight_results_tidied %>% filter(subgroup == "Type 2") %>% 
-  select(drug, condition, 'N T2' = 'N with non-missing outcome', 'Average weight response (95%CI) T2' = 'Average weight response (95%CI)') %>%
+  select(drug, condition, 'N T2' = 'N with non-missing outcome', 'Average weight response unadjusted T2' = 'Average weight response unadjusted', 'Average weight response (95%CI) T2' = 'Average weight response (95%CI)') %>%
   left_join(weight_results_tidied %>% filter(subgroup == "PEI") %>% 
-              select(drug, condition, 'N PEI' = 'N with non-missing outcome', 'Average weight response (95%CI) PEI' = 'Average weight response (95%CI)', 'Average difference (95%CI) PEI' = 'Average difference (95%CI)')) %>%
+              select(drug, condition, 'N PEI' = 'N with non-missing outcome', 'Average weight response unadjusted PEI' = 'Average weight response unadjusted', 'Average weight response (95%CI) PEI' = 'Average weight response (95%CI)', 'Average difference (95%CI) PEI' = 'Average difference (95%CI)')) %>%
   left_join(weight_results_tidied %>% filter(subgroup == "No PEI") %>% 
-              select(drug, condition, 'N No PEI' = 'N with non-missing outcome', 'Average weight response (95%CI) No PEI' = 'Average weight response (95%CI)', 'Average difference (95%CI) No PEI' = 'Average difference (95%CI)'))
+              select(drug, condition, 'N No PEI' = 'N with non-missing outcome', 'Average weight response unadjusted No PEI' = 'Average weight response unadjusted', 'Average weight response (95%CI) No PEI' = 'Average weight response (95%CI)', 'Average difference (95%CI) No PEI' = 'Average difference (95%CI)'))
 
 #Output HTML table
 kableExtra::kable(weight_results_new_table,format="html", align="lll") %>% 
@@ -829,13 +835,16 @@ kableExtra::kable(weight_results_new_table,format="html", align="lll") %>%
   column_spec(1,width="3cm") %>%
   column_spec(2,width="6cm") %>%
   column_spec(3,width="4cm") %>%
-  column_spec(4,width="6cm") %>%
-  column_spec(5,width="4cm") %>%
-  column_spec(6,width="6cm") %>%
-  column_spec(7,width="6cm") %>%
-  column_spec(8,width="4cm") %>%
+  column_spec(4,width="4cm") %>%
+  column_spec(5,width="6cm") %>%
+  column_spec(6,width="4cm") %>%
+  column_spec(7,width="4cm") %>%
+  column_spec(8,width="6cm") %>%
   column_spec(9,width="6cm") %>%
-  column_spec(10,width="6cm") %>%
+  column_spec(10,width="4cm") %>%
+  column_spec(11,width="4cm") %>%
+  column_spec(12,width="6cm") %>%
+  column_spec(13,width="6cm") %>%
   cat(.,file="weight_supplementary_table.html")
 
 
