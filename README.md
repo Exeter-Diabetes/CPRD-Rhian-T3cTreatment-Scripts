@@ -1,9 +1,31 @@
 # CPRD-Rhian-T3c-Scripts
-This repository contains the R scripts to define type 3c diabetes phenotypes and run the analysis of treatment outcomes vs type 2 diabetes controls, using CPRD Aurum primary care data.
+This repository contains the R scripts to define type 3c diabetes phenotypes and run the analysis to evaluate treatment outcomes on major oral glucose-lowering therapy classes in type 3c vs type 2 diabetes controls, using CPRD Aurum primary care data.
+Published Diabetes, Obesity and Metabolism 2025: https://doi.org/10.1111/dom.16163
 
 &nbsp;
 
 ## Scripts
+
+**Defining cohorts:**
+
+defining_T3c_cohort.R: Defines type 3c diabetes phenotypes based on a record of a pancreatic condition (acute pancreatitis, chronic pancreatitis, pancreatic cancer, or haemochromatosis) prior to a diagnosis of diabetes, and defines pancreatic exocrine insuffiency (PEI). 
+Note: cohorts defined in this study are based on the at-diagnosis and treatment response cohorts defined in https://github.com/Exeter-Diabetes/CPRD-Cohort-scripts
+
+
+**Characteristics at diabetes diagnosis/ treatment from diagnosis:**
+
+Baseline_table_at_diagnosis_cohort.R: generates a table of baseline clinical and sociodemographic characteritics of an incident cohort of individuals with type 3c diabetes (with PEI and without PEI) and type 2 diabetes at the diagnosis date of their diabetes. Outputs Table 1.
+
+Time_to_insulin.R: survival analysis of time to initiation of insulin treatment from diabetes diagnosis, stratified by PEI status and underlying pancreatic condition, and outputting Kaplan Meir survival curves and unadjusted Cox proportional hazard ratios for each analysis. Outputs Supplementary Figures 3 & 4.
+
+Time_to_oral_therapies.R: survival analysis of time to initiation of oral glucose-lowering therapy from diabetes diagnosis, stratified by PEI status and underlying pancreatic condition, and outputting Kaplan Meir survival curves and unadjusted Cox proportional hazard ratios for each analysis. Outputs Supplementary Figures 5 & 6.
+
+
+**Treatment response to oral therapies (metformin, sulphonylureas, thiazolidinediones [TZDs], SGLT2-inhibitors, DPP4-inhibitors):**
+
+Baseline_table_matched_cohort_by_drugs.R: generates a table of baseline clinical and sociodemographic characteritics of the matched treatment response cohort of individuals with type 3c diabetes and type 2 diabetes controls at the date of drug initiation, by drug class. Outputs Supplementary Table 3.
+
+Main_treatment_response_analysis.R: matches individuals with type 3c diabetes to up to 10 type 2 diabetes controls, and runs analysis comparing treatment outcomes (HbA1c response, early treatment discontinuation, weight change) in individuals with type 3c diabetes (with PEI/ without PEI) vs type 2 diabetes controls, overall, by drug class, and by underlying pancreatic condition. Outputs Figure 1, Figure 2, Supplementary Figures 7 & 8, and Supplementary Tables 4-8.
 
 &nbsp;
 
@@ -11,6 +33,23 @@ This repository contains the R scripts to define type 3c diabetes phenotypes and
 
 &nbsp;
 
+## Glucose-lowering drug classes
+
+The drug classes evaluated in this study were:
+* Metformin
+* Sulphonylureas
+* Thiazolidinediones (TZDs)
+* SGLT2-inhibitors
+* DPP4-inhibitors
+
+&nbsp;
+
 ## Defining outcome variables
+
+* **HbA1c response:** Change from baseline HbA1c 12 months after drug initiation (the closest HbA1c measure to 12 months after initiation within 3-15 months) on unchanged therapy (no addition or cessation of other glucose-lowering medications, and continued prescription of the drug of interest)
+
+* **Early treatment discontinuation:** Discontinuation of a therapy within 6 months of initiation, with the availability of at least 3 months follow-up time after discontinuation required to confirm the drug was discontinued. A gap of over 6 months in prescriptions was used to indicate a drug being stopped.
+
+* **Weight change:** Change from baseline weight 12 months after drug initiation (the closest weight measure to 12 months after initiation within 3-15 months) on unchanged therapy (no addition or cessation of other glucose-lowering medications, and continued prescription of the drug of interest)
 
 &nbsp;
