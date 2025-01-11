@@ -38,6 +38,23 @@ Note: cohorts defined in this study are based on the at-diagnosis and treatment 
 
 ## Type 3c phenotypes
 
+We defined type 3c diabetes based on a record of a pancreatic condition prior to or up to 30 days after a diagnosis of diabetes (any diabetes type). Pancreatic conditions were defined in CPRD primary care data and linked HES records, and included:
+* Acute pancreatitis (CPRD medcodes and ICD10 codes used available in https://github.com/Exeter-Diabetes/CPRD-Codelists)
+* Chronic pancreatitis (CPRD medcodes and ICD10 codes used available in https://github.com/Exeter-Diabetes/CPRD-Codelists)
+* Pancreatic cancer (CPRD medcodes provided by the SPOCC Programme team https://blogs.exeter.ac.uk/spocc/, ICD10 codes used available in https://github.com/Exeter-Diabetes/CPRD-Codelists)
+* Haemochromatosis (CPRD medcodes provided by the SPOCC Programme team https://blogs.exeter.ac.uk/spocc/, ICD10 codes used available in https://github.com/Exeter-Diabetes/CPRD-Codelists)
+
+  &nbsp;
+
+We excluded diabetes secondary to cystic fibrosis, and diabetes secondary to surgical pancreatic resection only from this study.
+
+&nbsp;
+
+We defined pancreatic exocrine insufficiency as any of the following in the CPRD primary care data: 
+* Diagnosis code for pancreatic exocrine insufficiency (CPRD medcodes used available in https://github.com/Exeter-Diabetes/CPRD-Codelists)
+* Faecal elastase-1 (FE1) test result less than 200 ug/g
+* Prescription for pancreatic enzyme replacement therapy (PERT)
+
 &nbsp;
 
 ## Glucose-lowering drug classes
